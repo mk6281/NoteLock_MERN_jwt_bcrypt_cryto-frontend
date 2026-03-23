@@ -14,17 +14,17 @@ function Credentials() {
   const token = localStorage.getItem("token");
 
   // ✅ Fetch credentials
-  const fetchCreds = () => {
-    axios.post(
-      "http://localhost:8081/getCredentials",
-      {},
-      { headers: { Authorization: token } }
-    ).then(res => setCreds(res.data));
-  };
+  const fetchCreds = React.useCallback(() => {
+  axios.post(
+    "http://localhost:8081/getCredentials",
+    {},
+    { headers: { Authorization: token } }
+  ).then(res => setCreds(res.data));
+}, [token]);
 
   useEffect(() => {
-    fetchCreds();
-  }, []);
+  fetchCreds();
+}, [fetchCreds]);
 
   // ✅ Add or Update
   const handleSave = () => {
