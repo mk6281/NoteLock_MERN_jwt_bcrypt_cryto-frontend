@@ -16,7 +16,7 @@ function ViewNote() {
     console.log("📌 Note ID:", id);
 
     axios.post(
-      "http://localhost:8081/getNoteById",
+      "https://notelock-mern-jwt-bcrypt-cryto-backend.onrender.comgetNoteById",
       { id },
       {
         headers: {
