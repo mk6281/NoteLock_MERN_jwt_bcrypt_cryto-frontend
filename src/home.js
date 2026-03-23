@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -10,21 +10,15 @@ function Home() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  const token = localStorage.getItem("token"); // 🔐 get token
+  const token = localStorage.getItem("token");
 
-  // ✅ Protect + Fetch
-  useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    } else {
-      fetchNotes();
-    }
-  }, [token]);
+  // 🔥 BACKEND URL (CHANGE AFTER DEPLOY)
+  const API = "http://localhost:8081";
 
-  // ✅ Fetch notes
-  const fetchNotes = () => {
+  // ✅ Fetch notes (FIXED with useCallback)
+  const fetchNotes = useCallback(() => {
     axios.post(
-      "http://localhost:8081/getNotes",
+      `${API}/getNotes`,
       {},
       {
         headers: {
@@ -42,7 +36,16 @@ function Home() {
         navigate("/login");
       }
     });
-  };
+  }, [token, navigate]);
+
+  // ✅ Protect + Fetch (FIXED dependencies)
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    } else {
+      fetchNotes();
+    }
+  }, [token, fetchNotes, navigate]);
 
   // ✅ Add note
   const handleAddNote = () => {
@@ -52,11 +55,8 @@ function Home() {
     }
 
     axios.post(
-      "http://localhost:8081/addNote",
-      {
-        title,
-        content
-      },
+      `${API}/addNote`,
+      { title, content },
       {
         headers: {
           Authorization: token
@@ -82,7 +82,7 @@ function Home() {
   // ✅ Delete note
   const handleDelete = (id) => {
     axios.post(
-      "http://localhost:8081/deleteNote",
+      `${API}/deleteNote`,
       { id },
       {
         headers: {
@@ -104,8 +104,8 @@ function Home() {
 
   // ✅ Logout
   const handleLogout = () => {
-    localStorage.removeItem("token"); // 🔐 remove token
-    navigate('/login');
+    localStorage.removeItem("token");
+    navigate("/login");
   };
 
   return (
@@ -114,12 +114,22 @@ function Home() {
       {/* Header */}
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2>📒 NoteLock Dashboard</h2>
-        <button onClick={() => navigate("/credentials")}>
-  Password Manager 🔐
-</button>
-        <button className="btn btn-danger" onClick={handleLogout}>
-          Logout
-        </button>
+
+        <div>
+          <button 
+            className="btn btn-secondary me-2"
+            onClick={() => navigate("/credentials")}
+          >
+            🔐 Password Manager
+          </button>
+
+          <button 
+            className="btn btn-danger"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+        </div>
       </div>
 
       {/* Add Note */}
