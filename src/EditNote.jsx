@@ -17,7 +17,7 @@ function EditNote() {
   useEffect(() => {
 
     axios.post(
-      "http://localhost:8081/getNoteById",
+      "https://notelock-mern-jwt-bcrypt-cryto-backend.onrender.com/getNoteById",
       { id },
       {
         headers: {
@@ -56,7 +56,7 @@ function EditNote() {
 
     try {
       await axios.post(
-        "http://localhost:8081/updateNote",
+        "https://notelock-mern-jwt-bcrypt-cryto-backend.onrender.com/updateNote",
         {
           id,
           title,
