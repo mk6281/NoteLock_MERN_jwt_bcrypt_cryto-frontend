@@ -16,7 +16,7 @@ function Credentials() {
   // ✅ Fetch credentials
   const fetchCreds = React.useCallback(() => {
   axios.post(
-    "http://localhost:8081/getCredentials",
+    "https://notelock-mern-jwt-bcrypt-cryto-backend.onrender.com/getCredentials",
     {},
     { headers: { Authorization: token } }
   ).then(res => setCreds(res.data));
@@ -36,7 +36,7 @@ function Credentials() {
     if (editId) {
       // 🔄 Update
       axios.post(
-        "http://localhost:8081/updateCredential",
+        "https://notelock-mern-jwt-bcrypt-cryto-backend.onrender.com/updateCredential",
         { id: editId, site, username, password },
         { headers: { Authorization: token } }
       ).then(() => {
@@ -46,7 +46,7 @@ function Credentials() {
     } else {
       // ➕ Add
       axios.post(
-        "http://localhost:8081/addCredential",
+        "https://notelock-mern-jwt-bcrypt-cryto-backend.onrender.com/addCredential",
         { site, username, password },
         { headers: { Authorization: token } }
       ).then(() => {
@@ -59,7 +59,7 @@ function Credentials() {
   // ✅ Delete
   const handleDelete = (id) => {
     axios.post(
-      "http://localhost:8081/deleteCredential",
+      "https://notelock-mern-jwt-bcrypt-cryto-backend.onrender.com/deleteCredential",
       { id },
       { headers: { Authorization: token } }
     ).then(() => fetchCreds());
