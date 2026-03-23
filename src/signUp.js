@@ -32,7 +32,7 @@ function SignUp() {
       validationErrors.email === "" &&
       validationErrors.password === ""
     ) {
-      axios.post('http://localhost:8081/signup', values)
+      axios.post('https://notelock-mern-jwt-bcrypt-cryto-backend.onrender.com/signup', values)
         .then(res => {
           console.log(res.data);
           navigate('/login');
