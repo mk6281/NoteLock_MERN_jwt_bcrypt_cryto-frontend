@@ -13,7 +13,7 @@ function Home() {
   const token = localStorage.getItem("token");
 
   // 🔥 BACKEND URL (CHANGE AFTER DEPLOY)
-  const API = "http://localhost:8081";
+  const API = "https://notelock-mern-jwt-bcrypt-cryto-backend.onrender.com";
 
   // ✅ Fetch notes (FIXED with useCallback)
   const fetchNotes = useCallback(() => {
