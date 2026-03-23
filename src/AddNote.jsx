@@ -20,7 +20,7 @@ function AddNote() {
       const token = localStorage.getItem("token");
 
       await axios.post(
-        "http://localhost:8081/addNote",
+        "https://notelock-mern-jwt-bcrypt-cryto-backend.onrender.com/addNote",
         {
           title,
           content   // ❌ no email
